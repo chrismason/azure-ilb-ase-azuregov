@@ -1,0 +1,144 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string",
+            "defaultValue": "USDoD East",
+            "allowedValues": [
+                "USDoD East",
+                "USDoD Central"
+            ],
+            "metadata": {
+                "description": "Location for all resources"
+            }
+        },
+        "aseName": {
+            "type": "string",
+            "defaultValue": "[concat('ASE', uniqueString(resourceGroup().id))]",
+            "metadata": {
+                "description": "Name of the ASE resource"
+            }
+        },
+        "vnetResourceGroupName": {
+            "type": "string",
+            "metadata": {
+                "description": "The resource group name that contains the vnet"
+            }
+        },
+        "vnetResourceName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the vnet"
+            }
+        },
+        "vnetAddressRange": {
+            "type": "string",
+            "metadata": {
+                "description": "Address range of the virtual network"
+            }
+        },
+        "aseSubnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "Subnet name that will contain the App Service Environment"
+            }
+        },
+        "aseSubnetAddressRange": {
+            "type": "string",
+            "metadata": {
+                "description": "Address range that will be used by the App Service Environment"
+            }
+        },
+        "internalLoadBalancingMode": {
+            "type": "int",
+            "defaultValue": 3,
+            "allowedValues": [
+                0,
+                1,
+                2,
+                3
+            ],
+            "metadata": {
+                "description": "0 = public VIP only, 1 = only ports 80/443 are mapped to ILB VIP, 2 = only FTP ports are mapped to ILB VIP, 3 = both ports 80/443 and FTP ports are mapped to an ILB VIP."
+            }
+        },
+        "dnsSuffix": {
+            "type": "string",
+            "metadata": {
+                "description": "Used when deploying an ILB enabled ASE.  Set this to the root domain associated with the ASE.  For example: contoso.com"
+            }
+        },
+        "_artifactsLocation": {
+            "type": "string",
+            "metadata": {
+                "description": "The location of resources, such as templates and DSC modules, that the template depends on"
+            },
+            "defaultValue": "https://raw.githubusercontent.com/masonch/azure-ilb-ase-azuregov/master"
+        },
+        "_artifactsLocationSasToken": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Auto-generated token to access _artifactsLocation"
+            },
+            "defaultValue": ""
+        }
+    },
+    "variables": {
+        "vnetID": "[resourceId(parameters('vnetResourceGroupName'), 'Microsoft.Network/virtualNetworks', parameters('vnetResourceName'))]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-05-10",
+            "type": "Microsoft.Resources/deployments",
+            "name": "BuildOrUpdateASENetworking",
+            "resourceGroup": "[parameters('vnetResourceGroupName')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('_artifactsLocation'), '/nestedtemplates/vnet.json', parameters('_artifactsLocationSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "vnetResourceName": {
+                        "value": "[parameters('vnetResourceName')]"
+                    },
+                    "vnetAddressRange": {
+                        "value": "[parameters('vnetAddressRange')]"
+                    },
+                    "subnetName": {
+                        "value": "[parameters('aseSubnetName')]"
+                    },
+                    "aseSubnetAddressRange": {
+                        "value": "[parameters('aseSubnetAddressRange')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2015-08-01",
+            "type": "Microsoft.Web/hostingEnvironments",
+            "name": "[parameters('aseName')]",
+            "location": "[parameters('location')]",
+            "kind": "ASEV2",
+            "properties": {
+                "name": "[parameters('aseName')]",
+                "location": "[parameters('location')]",
+                "ipSslAddressCount": 0,
+                "internalLoadBalancingMode": "[parameters('internalLoadBalancingMode')]",
+                "dnsSuffix": "[parameters('dnsSuffix')]",
+                "virtualNetwork": {
+                    "Id": "[variables('vnetID')]",
+                    "Subnet": "[parameters('aseSubnetName')]"
+                }
+            },
+            "dependsOn": [
+                "[variables('vnetID')]"
+            ]
+        }
+    ],
+    "outputs": {}
+}

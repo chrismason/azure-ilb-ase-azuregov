@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "aseName": {
+            "value": "arm-deploy-ase"
+        },
+        "vnetResourceGroupName": {
+            "value": "arm-deploy-ase-vnet-rg"
+        },
+        "vnetResourceName": {
+            "value": "arm-deploy-ase-vnet"
+        },
+        "vnetAddressRange": {
+            "value": "10.10.0.0/16"
+        },
+        "aseSubnetName": {
+            "value": "arm-deploy-ase-snet"
+        },
+        "aseSubnetAddressRange": {
+            "value": "10.10.0.0/24"
+        },
+        "dnsSuffix": {
+            "value": "azuregov-ase.com"
+        }
+    }
+}
