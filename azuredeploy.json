@@ -136,7 +136,7 @@
                 }
             },
             "dependsOn": [
-                "[variables('vnetID')]"
+                "Microsoft.Resources/deployments/BuildOrUpdateASENetworking"
             ]
         }
     ],
