@@ -380,6 +380,7 @@
                     {
                         "name": "[parameters('subnetName')]",
                         "properties": {
+                            "mode": "Incremental",
                             "addressPrefix": "[parameters('aseSubnetAddressRange')]",
                             "networkSecurityGroup": {
                                 "id": "[variables('nsgId')]"
