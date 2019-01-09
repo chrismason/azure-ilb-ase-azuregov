@@ -36,6 +36,11 @@
             "metadata": {
                 "description": "Address range that will be used by the App Service Environment"
             }
+        },
+        "rebuildVNET": {
+            "type": "string",
+            "metadata": {"description":"Whether to rebuild the VNET (yes) or not (no)"},
+            "defaultValue": "No"
         }
     },
     "variables": {
@@ -367,10 +372,10 @@
         {
             "apiVersion": "2017-06-01",
             "type": "Microsoft.Network/virtualNetworks",
+            "condition": "[equals(parameters('rebuildVNET'),'yes')]",
             "name": "[parameters('vnetResourceName')]",
             "location": "[parameters('location')]",
             "properties": {
-                "mode": "Incremental",
                 "addressSpace": {
                     "addressPrefixes": [
                         "[parameters('vnetAddressRange')]"
