@@ -370,6 +370,7 @@
             "name": "[parameters('vnetResourceName')]",
             "location": "[parameters('location')]",
             "properties": {
+                "mode": "Incremental",
                 "addressSpace": {
                     "addressPrefixes": [
                         "[parameters('vnetAddressRange')]"

@@ -7,7 +7,10 @@
             "defaultValue": "USDoD East",
             "allowedValues": [
                 "USDoD East",
-                "USDoD Central"
+                "USDoD Central",
+                "USGov Virginia",
+                "USGov Arizona",
+                "USGov Texas"
             ],
             "metadata": {
                 "description": "Location for all resources"
