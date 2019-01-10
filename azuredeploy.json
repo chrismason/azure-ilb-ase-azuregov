@@ -85,6 +85,15 @@
                 "description": "Auto-generated token to access _artifactsLocation"
             },
             "defaultValue": ""
+        },
+        "aseRebuildVNET": {
+            "type": "string",
+            "metadata": {"description":"Whether to rebuild the VNET (yes) or not (no)"},
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
         }
     },
     "variables": {
@@ -117,6 +126,9 @@
                     },
                     "aseSubnetAddressRange": {
                         "value": "[parameters('aseSubnetAddressRange')]"
+                    },
+                    "rebuildVNET":{
+                        "value": "[parameters('aseRebuildVNET')]"
                     }
                 }
             }
