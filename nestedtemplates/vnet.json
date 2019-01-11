@@ -53,7 +53,7 @@
     },
     "variables": {
         "nsgName": "[concat(parameters('vnetResourceName'), '-', parameters('subnetName'), '-ase-mgmt-nsg')]",
-        "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('nsgName'))]",
+        "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('nsgName'))]",
         "subnetRouteTableName":"[concat(parameters('subnetName'), '-routeTable')]"
     },
     "resources": [
