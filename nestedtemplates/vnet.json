@@ -44,11 +44,17 @@
             "type": "string",
             "metadata": {"description":"Whether to rebuild the VNET (yes) or not (no)"},
             "defaultValue": "No"
+        },
+        "buildRouteTable":{
+            "type":"string",
+            "metadata": {"description":"Toggle whether to build a route table (yes) or not (no)"},
+            "defaultValue": "No"
         }
     },
     "variables": {
         "nsgName": "[concat(parameters('vnetResourceName'), '-', parameters('subnetName'), '-ase-mgmt-nsg')]",
-        "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+        "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('nsgName'))]",
+        "subnetRouteTableName":"[concat(parameters('subnetName'), '-routeTable')]"
     },
     "resources": [
         {
@@ -367,6 +373,27 @@
                             "destinationPortRanges": [],
                             "sourceAddressPrefixes": [],
                             "destinationAddressPrefixes": []
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/routeTables",
+            "condition":"[equals(parameters('buildRouteTable'),'yes')]", 
+            "name": "[variables('subnetRouteTableName')]",
+            "location": "[parameters('location')]",
+            "tags": {
+                "displayName": "UDR - Subnet"
+            },
+            "properties": {
+                "routes": [
+                    {
+                        "name": "ase-route",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "Internet"
                         }
                     }
                 ]

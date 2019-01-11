@@ -77,7 +77,7 @@
             "metadata": {
                 "description": "The location of resources, such as templates and DSC modules, that the template depends on"
             },
-            "defaultValue": "https://raw.githubusercontent.com/masonch/azure-ilb-ase-azuregov/master"
+            "defaultValue": "https://raw.githubusercontent.com/jftl6y/azure-ilb-ase-azuregov/master"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
@@ -94,6 +94,12 @@
                 "Yes",
                 "No"
             ]
+        },
+        "aseBuildRouteTable":{
+            "type":"string",
+            "metadata": {"description":"Toggle whether to build a route table (yes) or not (no)"},
+            "defaultValue": "No",
+            "allowedValues": ["Yes","No"]
         }
     },
     "variables": {
@@ -129,6 +135,9 @@
                     },
                     "rebuildVNET":{
                         "value": "[parameters('aseRebuildVNET')]"
+                    },
+                    "buildRouteTable":{
+                        "value": "[parameters('aseBuildRouteTable')]"
                     }
                 }
             }
