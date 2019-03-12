@@ -407,7 +407,7 @@
             "apiVersion": "2017-06-01",
             "type": "Microsoft.Network/virtualNetworks",
             "condition": "[and(equals(parameters('rebuildVNET'),'yes'), equals(parameters('buildRouteTable'),'no'))]",
-            "name": "concat([parameters('vnetResourceName')],[parameters('buildRouteTable')])",
+            "name": "concat([parameters('vnetResourceName')],'0')",
             "location": "[parameters('location')]",
             "tags": {
                 "displayName": "Deploy VNet - no UDR"
@@ -438,7 +438,7 @@
             "apiVersion": "2017-06-01",
             "type": "Microsoft.Network/virtualNetworks",
             "condition": "[and(equals(parameters('rebuildVNET'),'yes'), equals(parameters('buildRouteTable'),'yes'))]",
-            "name": "concat([parameters('vnetResourceName')],[parameters('buildRouteTable')])",
+            "name": "concat([parameters('vnetResourceName')],'1')",
             "location": "[parameters('location')]",
             "tags": {
                 "displayName": "Deploy VNet - with UDR"
