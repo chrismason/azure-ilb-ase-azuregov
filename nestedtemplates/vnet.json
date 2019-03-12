@@ -465,7 +465,7 @@
                                 "id": "[variables('nsgId')]"
                             },
                             "routeTable":{
-                                "id": "[variables('subnetRouteTableName')]"
+                                "id": "[resourceId('Microsoft.Network/routeTables', variables('subnetRouteTableName'))]"
                             }
                         }
                     }
