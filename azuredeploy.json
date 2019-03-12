@@ -7,7 +7,10 @@
             "defaultValue": "USDoD East",
             "allowedValues": [
                 "USDoD East",
-                "USDoD Central"
+                "USDoD Central",
+                "USGov Virginia",
+                "USGov Arizona",
+                "USGov Texas"
             ],
             "metadata": {
                 "description": "Location for all resources"
@@ -82,10 +85,25 @@
                 "description": "Auto-generated token to access _artifactsLocation"
             },
             "defaultValue": ""
+        },
+        "aseRebuildVNET": {
+            "type": "string",
+            "metadata": {"description":"Whether to rebuild the VNET (yes) or not (no)"},
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
+        "aseBuildRouteTable":{
+            "type":"string",
+            "metadata": {"description":"Toggle whether to build a route table (yes) or not (no)"},
+            "defaultValue": "No",
+            "allowedValues": ["Yes","No"]
         }
     },
     "variables": {
-        "vnetID": "[resourceId(parameters('vnetResourceGroupName'), 'Microsoft.Network/virtualNetworks', parameters('vnetResourceName'))]"
+        "vnetID": "[resourceId(parameters('vnetResourceGroupName'), 'Microsoft.Network/virtualNetworks', concat(parameters('vnetResourceName'),if(equals(parameters('aseBuildRouteTable'),'Yes'),'1','0')))]"
     },
     "resources": [
         {
@@ -114,6 +132,12 @@
                     },
                     "aseSubnetAddressRange": {
                         "value": "[parameters('aseSubnetAddressRange')]"
+                    },
+                    "rebuildVNET":{
+                        "value": "[parameters('aseRebuildVNET')]"
+                    },
+                    "buildRouteTable":{
+                        "value": "[parameters('aseBuildRouteTable')]"
                     }
                 }
             }
@@ -124,6 +148,9 @@
             "name": "[parameters('aseName')]",
             "location": "[parameters('location')]",
             "kind": "ASEV2",
+            "tags": {
+                "displayName" : "Deploy ASE"
+            },
             "properties": {
                 "name": "[parameters('aseName')]",
                 "location": "[parameters('location')]",
