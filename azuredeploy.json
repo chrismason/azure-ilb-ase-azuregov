@@ -111,9 +111,6 @@
             "type": "Microsoft.Resources/deployments",
             "name": "BuildOrUpdateASENetworking",
             "resourceGroup": "[parameters('vnetResourceGroupName')]",
-            "tags": {
-                "displayName":"Build or Update ASE Networking components"
-            },
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
