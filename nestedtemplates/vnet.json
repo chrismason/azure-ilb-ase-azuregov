@@ -466,7 +466,15 @@
                             },
                             "routeTable":{
                                 "id": "[resourceId('Microsoft.Network/routeTables', variables('subnetRouteTableName'))]"
-                            }
+                            },
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Storage"
+                                },
+                                {
+                                    "service": "Microsoft.Sql"
+                                }
+                            ]
                         }
                     }
                 ]
