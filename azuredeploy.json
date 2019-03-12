@@ -103,7 +103,7 @@
         }
     },
     "variables": {
-        "vnetID": "[resourceId(parameters('vnetResourceGroupName'), 'Microsoft.Network/virtualNetworks', concat(parameters('vnetResourceName'),if(equals(parameters('aseBuildRouteTable'),'yes'),'1','0')))]"
+        "vnetID": "[resourceId(parameters('vnetResourceGroupName'), 'Microsoft.Network/virtualNetworks', concat(parameters('vnetResourceName'),if(equals(parameters('aseBuildRouteTable'),'Yes'),'1','0')))]"
     },
     "resources": [
         {

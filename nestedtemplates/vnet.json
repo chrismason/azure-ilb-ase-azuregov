@@ -406,7 +406,7 @@
         {
             "apiVersion": "2017-06-01",
             "type": "Microsoft.Network/virtualNetworks",
-            "condition": "[and(equals(parameters('rebuildVNET'),'yes'), equals(parameters('buildRouteTable'),'no'))]",
+            "condition": "[and(equals(parameters('rebuildVNET'),'Yes'), equals(parameters('buildRouteTable'),'No'))]",
             "name": "concat([parameters('vnetResourceName')],'0')",
             "location": "[parameters('location')]",
             "tags": {
@@ -437,7 +437,7 @@
         {
             "apiVersion": "2017-06-01",
             "type": "Microsoft.Network/virtualNetworks",
-            "condition": "[and(equals(parameters('rebuildVNET'),'yes'), equals(parameters('buildRouteTable'),'yes'))]",
+            "condition": "[and(equals(parameters('rebuildVNET'),'Yes'), equals(parameters('buildRouteTable'),'Yes'))]",
             "name": "concat([parameters('vnetResourceName')],'1')",
             "location": "[parameters('location')]",
             "tags": {
