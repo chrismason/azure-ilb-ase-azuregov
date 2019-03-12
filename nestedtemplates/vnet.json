@@ -384,7 +384,7 @@
         {
             "apiVersion": "2015-06-15",
             "type": "Microsoft.Network/routeTables",
-            "condition":"[equals(parameters('buildRouteTable'),'yes')]", 
+            "condition":"[equals(parameters('buildRouteTable'),'Yes')]", 
             "name": "[variables('subnetRouteTableName')]",
             "location": "[parameters('location')]",
             "tags": {
