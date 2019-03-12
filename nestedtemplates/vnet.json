@@ -54,7 +54,7 @@
     "variables": {
         "nsgName": "[concat(parameters('vnetResourceName'), '-', parameters('subnetName'), '-ase-mgmt-nsg')]",
         "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('nsgName'))]",
-        "subnetRouteTableName":"[concat(parameters('subnetName'), '-routeTable')]"        
+        "subnetRouteTableName":"[concat(parameters('subnetName'), '-routeTable')]"
     },
     "resources": [
         {
@@ -406,7 +406,7 @@
             "apiVersion": "2017-06-01",
             "type": "Microsoft.Network/virtualNetworks",
             "condition": "[and(equals(parameters('rebuildVNET'),'Yes'), equals(parameters('buildRouteTable'),'No'))]",
-            "name": "concat([parameters('vnetResourceName')],'0')",
+            "name": "[concat(parameters('vnetResourceName'),'0')]",
             "location": "[parameters('location')]",
             "tags": {
                 "displayName": "Deploy VNet - no UDR"
@@ -437,7 +437,7 @@
             "apiVersion": "2017-06-01",
             "type": "Microsoft.Network/virtualNetworks",
             "condition": "[and(equals(parameters('rebuildVNET'),'Yes'), equals(parameters('buildRouteTable'),'Yes'))]",
-            "name": "concat([parameters('vnetResourceName')],'1')",
+            "name": "[concat(parameters('vnetResourceName'),'1')]",
             "location": "[parameters('location')]",
             "tags": {
                 "displayName": "Deploy VNet - with UDR"
