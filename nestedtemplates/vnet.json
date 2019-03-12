@@ -54,8 +54,7 @@
     "variables": {
         "nsgName": "[concat(parameters('vnetResourceName'), '-', parameters('subnetName'), '-ase-mgmt-nsg')]",
         "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('nsgName'))]",
-        "subnetRouteTableName":"[concat(parameters('subnetName'), '-routeTable')]",
-        
+        "subnetRouteTableName":"[concat(parameters('subnetName'), '-routeTable')]"        
     },
     "resources": [
         {
