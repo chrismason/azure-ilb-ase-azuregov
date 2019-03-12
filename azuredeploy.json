@@ -103,7 +103,7 @@
         }
     },
     "variables": {
-        "vnetID": "[resourceId(parameters('vnetResourceGroupName'), 'Microsoft.Network/virtualNetworks', parameters('vnetResourceName'))]"
+        "vnetID": "[resourceId(parameters('vnetResourceGroupName'), 'Microsoft.Network/virtualNetworks', concat(parameters('vnetResourceName'),parameters('aseBuildRouteTable')))]"
     },
     "resources": [
         {
@@ -148,6 +148,9 @@
             "name": "[parameters('aseName')]",
             "location": "[parameters('location')]",
             "kind": "ASEV2",
+            "tags": {
+                "displayName" : "Deploy ASE"
+            },
             "properties": {
                 "name": "[parameters('aseName')]",
                 "location": "[parameters('location')]",
