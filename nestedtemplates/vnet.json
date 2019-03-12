@@ -424,7 +424,15 @@
                             "addressPrefix": "[parameters('aseSubnetAddressRange')]",
                             "networkSecurityGroup": {
                                 "id": "[variables('nsgId')]"
-                            }
+                            },
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Storage"
+                                },
+                                {
+                                    "service": "Microsoft.Sql"
+                                }
+                            ]
                         }
                     }
                 ]
@@ -465,7 +473,7 @@
             },
             "dependsOn": [
                 "[variables('nsgId')]",
-                "[variables('subnetRouteTableName')]"
+                "[resourceId('Microsoft.Network/routeTables', variables('subnetRouteTableName'))]"
             ]
         }
     ],
